@@ -25,17 +25,12 @@ import java.util.stream.Gatherer;
  * rosettacode.org
  */
 public class RangeExtraction {
-  public static void main(String[] args) {
-    var result = rangeExtraction(new int[] {-10, -9, -8, -6, -3, -2, -1, 0, 1, 3, 4, 5, 7, 8, 9, 10, 11, 14, 15, 17, 18, 19, 20});
-    System.out.println(result);
-  }
-
   public static String rangeExtraction(int[] arr) {
     return Arrays.stream(arr)
         .boxed()
         .gather(range())
         .map(RangeExtraction::rangeToString)
-        .collect(Collectors.joining("-"));
+        .collect(Collectors.joining(","));
   }
 
   private static Gatherer<Integer, ?, List<Integer>> range() {
@@ -59,6 +54,7 @@ public class RangeExtraction {
   private static String rangeToString(List<Integer> range) {
     return switch (range.size()) {
       case 1 -> range.getFirst().toString();
+      case 2 -> STR."\{range.getFirst()},\{range.getLast()}";
       default -> STR."\{range.getFirst()}-\{range.getLast()}";
     };
   }
