@@ -26,4 +26,10 @@ abstract class RangeExtractionTest {
     var result = rangeExtraction.rangeExtraction(FIXTURE);
     assertEquals(EXPECTED, result);
   }
+
+  @Test
+  void emptyTest() {
+    var result = rangeExtraction.rangeExtraction(new int[0]);
+    assertEquals("", result);
+  }
 }

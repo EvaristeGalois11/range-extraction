@@ -3,6 +3,7 @@ package it.nave;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 import java.util.stream.Gatherer;
 
@@ -43,7 +44,13 @@ public class RangeExtractionFunctional implements RangeExtraction {
           }
           return state.add(element);
         };
-    return Gatherer.ofSequential(ArrayList::new, integrator, (o, downstream) -> downstream.push(o));
+    BiConsumer<List<Integer>, Gatherer.Downstream<? super List<Integer>>> finisher =
+        (o, downstream) -> {
+          if (!o.isEmpty()) {
+            downstream.push(o);
+          }
+        };
+    return Gatherer.ofSequential(ArrayList::new, integrator, finisher);
   }
 
   private String rangeToString(List<Integer> range) {
