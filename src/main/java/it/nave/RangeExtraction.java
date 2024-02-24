@@ -52,10 +52,11 @@ public class RangeExtraction {
   }
 
   private static String rangeToString(List<Integer> range) {
-    return switch (range.size()) {
-      case 1 -> range.getFirst().toString();
-      case 2 -> STR."\{range.getFirst()},\{range.getLast()}";
-      default -> STR."\{range.getFirst()}-\{range.getLast()}";
-    };
+    var result = range.getFirst().toString();
+    if (range.size() > 1) {
+      result += range.size() == 2 ? "," : "-";
+      result += range.getLast();
+    }
+    return result;
   }
 }
